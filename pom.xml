@@ -20,4 +20,9 @@
       </plugin>
     </plugins>
   </build>
+  <modules>
+    <module>oPos-common</module>
+    <module>oPos-client</module>
+    <module>oPos-servcie</module>
+  </modules>
 </project>
