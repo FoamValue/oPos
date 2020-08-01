@@ -51,6 +51,6 @@
   <modules>
     <module>oPos-common</module>
     <module>oPos-client</module>
-    <module>oPos-servcie</module>
+    <module>oPos-center</module>
   </modules>
 </project>

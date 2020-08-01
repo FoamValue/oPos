@@ -1,0 +1,43 @@
+server:
+  port: 18080
+
+spring:
+  profiles: dev
+  datasource:
+    jdbcUrl: jdbc:mysql://127.0.0.1:3306/oPos?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC&useSSL=true
+    username: root
+    password: 123456
+    driverClassName: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      poolName: hikari-local
+      autoCommit: true
+      connectionTestQuery: SELECT 1
+      connectionTimeout: 30000
+      idleTimeout: 30000
+      maxLifetime: 1800000
+      maximumPoolSize: 5
+      minimumIdle: 1
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+endpoints:
+  health:
+    sensitive: false
+  restart:
+    enabled: false
+  shutdown:
+    enabled: false
+
+management:
+  security:
+    enabled: false
+
+logging:
+  config: 
+    classpath:logback-boot.xml
+  path: /Users/chenxinjie/logs/oPos/
+  level:
+    root: INFO
