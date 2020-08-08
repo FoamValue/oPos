@@ -6,23 +6,25 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "osc_order_item", uniqueConstraints = {
     @UniqueConstraint(columnNames = { "order_no", "sku" }) })
 public class OscOrderItemEntity implements Serializable {
@@ -30,11 +32,12 @@ public class OscOrderItemEntity implements Serializable {
   private static final long serialVersionUID = -7331381906879927968L;
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid")
-  @GenericGenerator(name = "uuid", strategy = "uuid2")
-  @Column(name = "id", length = 32)
+  @GeneratedValue(strategy = GenerationType.AUTO, generator = "jpa-uuid")
+  @GenericGenerator(name = "jpa-uuid", strategy = "org.hibernate.id.UUIDGenerator")
+  @Column(name = "id", length = 36)
   private String id;
 
+  
   @Column(name = "order_no", length = 40, nullable = false)
   private String orderNo;
 
@@ -53,101 +56,101 @@ public class OscOrderItemEntity implements Serializable {
   @Column(name = "total", precision = 10, scale = 0, nullable = false)
   private int total;
 
+  @LastModifiedDate
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "ts", columnDefinition = "timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP()", nullable = false)
   private Date ts;
 
-  @ManyToOne(cascade = { CascadeType.MERGE,
-      CascadeType.REFRESH }, fetch = FetchType.EAGER, optional = false)
-  @JoinColumn(name = "order_no", insertable = false, updatable = false)
+  @ManyToOne(targetEntity = OscOrderEntity.class, cascade = CascadeType.ALL)
+  @JoinColumn(name = "order_no", referencedColumnName = "order_no", insertable = false, updatable = false)
   private OscOrderEntity orderEntity;
 
-  @OneToOne
+  @ManyToOne(targetEntity = PscSkuEntity.class, cascade = CascadeType.REFRESH)
   @JoinColumn(name = "sku", referencedColumnName = "sku", insertable = false, updatable = false)
   private PscSkuEntity skuEntity;
 
-  public final String getId() {
+  public String getId() {
     return id;
   }
 
-  public final void setId(String id) {
+  public void setId(String id) {
     this.id = id;
   }
 
-  public final String getOrderNo() {
+  public String getOrderNo() {
     return orderNo;
   }
 
-  public final void setOrderNo(String orderNo) {
+  public void setOrderNo(String orderNo) {
     this.orderNo = orderNo;
   }
 
-  public final String getSku() {
+  public String getSku() {
     return sku;
   }
 
-  public final void setSku(String sku) {
+  public void setSku(String sku) {
     this.sku = sku;
   }
 
-  public final int getNum() {
+  public int getNum() {
     return num;
   }
 
-  public final void setNum(int num) {
+  public void setNum(int num) {
     this.num = num;
   }
 
-  public final int getTagPrice() {
+  public int getTagPrice() {
     return tagPrice;
   }
 
-  public final void setTagPrice(int tagPrice) {
+  public void setTagPrice(int tagPrice) {
     this.tagPrice = tagPrice;
   }
 
-  public final int getRetailPrice() {
+  public int getRetailPrice() {
     return retailPrice;
   }
 
-  public final void setRetailPrice(int retailPrice) {
+  public void setRetailPrice(int retailPrice) {
     this.retailPrice = retailPrice;
   }
 
-  public final int getTotal() {
+  public int getTotal() {
     return total;
   }
 
-  public final void setTotal(int total) {
+  public void setTotal(int total) {
     this.total = total;
   }
 
-  public final Date getTs() {
+  public Date getTs() {
     return ts;
   }
 
-  public final void setTs(Date ts) {
+  public void setTs(Date ts) {
     this.ts = ts;
   }
 
-  public static final long getSerialversionuid() {
+  public final static long getSerialversionuid() {
     return serialVersionUID;
   }
 
-  public final OscOrderEntity getOrderEntity() {
+  public OscOrderEntity getOrderEntity() {
     return orderEntity;
   }
 
-  public final void setOrderEntity(OscOrderEntity orderEntity) {
+  public void setOrderEntity(OscOrderEntity orderEntity) {
     this.orderEntity = orderEntity;
   }
 
-  public final PscSkuEntity getSkuEntity() {
+  public PscSkuEntity getSkuEntity() {
     return skuEntity;
   }
 
-  public final void setSkuEntity(PscSkuEntity skuEntity) {
+  public void setSkuEntity(PscSkuEntity skuEntity) {
     this.skuEntity = skuEntity;
   }
 

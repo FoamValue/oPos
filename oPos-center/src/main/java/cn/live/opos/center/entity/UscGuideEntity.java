@@ -1,5 +1,6 @@
 package cn.live.opos.center.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -24,14 +25,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  */
 @Entity
 @Table(name = "usc_guide", uniqueConstraints = { @UniqueConstraint(columnNames = "no") })
-public class UscGuideEntity {
+public class UscGuideEntity implements Serializable {
 
   private static final long serialVersionUID = -5648617800765002770L;
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid")
-  @GenericGenerator(name = "uuid", strategy = "uuid2")
-  @Column(name = "id", length = 32)
+  @GeneratedValue(strategy = GenerationType.AUTO, generator = "jpa-uuid")
+  @GenericGenerator(name = "jpa-uuid", strategy = "org.hibernate.id.UUIDGenerator")
+  @Column(name = "id", length = 36)
   private String id;
 
   @Column(name = "no", length = 20, nullable = false)
@@ -48,43 +49,43 @@ public class UscGuideEntity {
   @Column(name = "ts", columnDefinition = "timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP()", nullable = false)
   private Date ts;
 
-  public final String getId() {
+  public String getId() {
     return id;
   }
 
-  public final void setId(String id) {
+  public void setId(String id) {
     this.id = id;
   }
 
-  public final String getNo() {
+  public String getNo() {
     return no;
   }
 
-  public final void setNo(String no) {
+  public void setNo(String no) {
     this.no = no;
   }
 
-  public final String getName() {
+  public String getName() {
     return name;
   }
 
-  public final void setName(String name) {
+  public void setName(String name) {
     this.name = name;
   }
 
-  public final int getGender() {
+  public int getGender() {
     return gender;
   }
 
-  public final void setGender(int gender) {
+  public void setGender(int gender) {
     this.gender = gender;
   }
 
-  public final Date getTs() {
+  public Date getTs() {
     return ts;
   }
 
-  public final void setTs(Date ts) {
+  public void setTs(Date ts) {
     this.ts = ts;
   }
 

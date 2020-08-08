@@ -2,15 +2,18 @@ package cn.live.opos.center.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -18,34 +21,42 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "osc_order", uniqueConstraints = { @UniqueConstraint(columnNames = "order_no") })
 public class OscOrderEntity implements Serializable {
 
   private static final long serialVersionUID = -4409502876337140593L;
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid")
-  @GenericGenerator(name = "uuid", strategy = "uuid2")
-  @Column(name = "id", length = 32)
+  @GeneratedValue(strategy = GenerationType.AUTO, generator = "jpa-uuid")
+  @GenericGenerator(name = "jpa-uuid", strategy = "org.hibernate.id.UUIDGenerator")
+  @Column(name = "id", length = 36)
   private String id;
 
   @Column(name = "order_no", length = 40, nullable = false)
   private String orderNo;
 
+  @CreatedDate
   @JsonFormat(pattern = "yyyy-MM-dd")
   @Temporal(TemporalType.DATE)
   @Column(name = "order_date", nullable = false)
   private Date orderDate;
 
+  /**
+   * 1: sell of goods. 2: return of goods.
+   */
   @Column(name = "order_type", nullable = false)
-  private Date orderType;
+  private int orderType;
 
   @Column(name = "order_status", nullable = false)
-  private Date orderStatus;
+  private int orderStatus;
 
   @Column(name = "num", precision = 5, scale = 0, nullable = false)
   private int num;
@@ -53,89 +64,113 @@ public class OscOrderEntity implements Serializable {
   @Column(name = "total", precision = 10, scale = 0, nullable = false)
   private int total;
 
+  @Column(name = "guide_no", length = 20, nullable = false)
+  private String guideNo;
+
+  @LastModifiedDate
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "ts", columnDefinition = "timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP()", nullable = false)
   private Date ts;
 
-  @OneToMany(cascade = { CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE,
-      CascadeType.REMOVE }, fetch = FetchType.LAZY, mappedBy = "orderEntity")
-  private Set<OscOrderItemEntity> orderItems;
+  @OneToMany(targetEntity = OscOrderItemEntity.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  @JoinColumn(name = "order_no", referencedColumnName = "order_no", insertable = false, updatable = false)
+  private List<OscOrderItemEntity> orderItems;
 
-  public final String getId() {
+  @ManyToOne(targetEntity = UscGuideEntity.class, cascade = CascadeType.REFRESH)
+  @JoinColumn(name = "guide_no", referencedColumnName = "no", insertable = false, updatable = false)
+  private UscGuideEntity guideEntity;
+
+  public String getId() {
     return id;
   }
 
-  public final void setId(String id) {
+  public void setId(String id) {
     this.id = id;
   }
 
-  public final String getOrderNo() {
+  public String getOrderNo() {
     return orderNo;
   }
 
-  public final void setOrderNo(String orderNo) {
+  public void setOrderNo(String orderNo) {
     this.orderNo = orderNo;
   }
 
-  public final Date getOrderDate() {
+  public Date getOrderDate() {
     return orderDate;
   }
 
-  public final void setOrderDate(Date orderDate) {
+  public void setOrderDate(Date orderDate) {
     this.orderDate = orderDate;
   }
 
-  public final Date getOrderType() {
+  public int getOrderType() {
     return orderType;
   }
 
-  public final void setOrderType(Date orderType) {
+  public void setOrderType(int orderType) {
     this.orderType = orderType;
   }
 
-  public final Date getOrderStatus() {
+  public int getOrderStatus() {
     return orderStatus;
   }
 
-  public final void setOrderStatus(Date orderStatus) {
+  public void setOrderStatus(int orderStatus) {
     this.orderStatus = orderStatus;
   }
 
-  public final int getNum() {
+  public int getNum() {
     return num;
   }
 
-  public final void setNum(int num) {
+  public void setNum(int num) {
     this.num = num;
   }
 
-  public final int getTotal() {
+  public int getTotal() {
     return total;
   }
 
-  public final void setTotal(int total) {
+  public void setTotal(int total) {
     this.total = total;
   }
 
-  public final Date getTs() {
+  public Date getTs() {
     return ts;
   }
 
-  public final void setTs(Date ts) {
+  public void setTs(Date ts) {
     this.ts = ts;
   }
 
-  public static final long getSerialversionuid() {
+  public final static long getSerialversionuid() {
     return serialVersionUID;
   }
 
-  public final Set<OscOrderItemEntity> getOrderItems() {
+  public List<OscOrderItemEntity> getOrderItems() {
     return orderItems;
   }
 
-  public final void setOrderItems(Set<OscOrderItemEntity> orderItems) {
+  public void setOrderItems(List<OscOrderItemEntity> orderItems) {
     this.orderItems = orderItems;
+  }
+
+  public String getGuideNo() {
+    return guideNo;
+  }
+
+  public void setGuideNo(String guideNo) {
+    this.guideNo = guideNo;
+  }
+
+  public UscGuideEntity getGuideEntity() {
+    return guideEntity;
+  }
+
+  public void setGuideEntity(UscGuideEntity guideEntity) {
+    this.guideEntity = guideEntity;
   }
 
 }

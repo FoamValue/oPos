@@ -24,9 +24,9 @@ public class PscSkuEntity implements Serializable {
   private static final long serialVersionUID = 8904367725209990433L;
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid")
-  @GenericGenerator(name = "uuid", strategy = "uuid2")
-  @Column(name = "id", length = 32)
+  @GeneratedValue(strategy = GenerationType.AUTO, generator = "jpa-uuid")
+  @GenericGenerator(name = "jpa-uuid", strategy = "org.hibernate.id.UUIDGenerator")
+  @Column(name = "id", length = 36)
   private String id;
 
   @Column(name = "sku", length = 50, nullable = false)
@@ -42,13 +42,13 @@ public class PscSkuEntity implements Serializable {
   private int colorNo;
 
   @Column(name = "color_name", nullable = false)
-  private int colorName;
+  private String colorName;
 
   @Column(name = "size_no", precision = 4, scale = 0, nullable = false)
   private int sizeNo;
 
   @Column(name = "size_name", nullable = false)
-  private int sizeName;
+  private String sizeName;
 
   @Column(name = "tag_price", precision = 10, scale = 0, nullable = false)
   private int tagPrice;
@@ -61,95 +61,95 @@ public class PscSkuEntity implements Serializable {
   @Column(name = "ts", columnDefinition = "timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP()", nullable = false)
   private Date ts;
 
-  public final String getId() {
+  public String getId() {
     return id;
   }
 
-  public final void setId(String id) {
+  public void setId(String id) {
     this.id = id;
   }
 
-  public final String getSku() {
+  public String getSku() {
     return sku;
   }
 
-  public final void setSku(String sku) {
+  public void setSku(String sku) {
     this.sku = sku;
   }
 
-  public final String getProductNo() {
+  public String getProductNo() {
     return productNo;
   }
 
-  public final void setProductNo(String productNo) {
+  public void setProductNo(String productNo) {
     this.productNo = productNo;
   }
 
-  public final String getProductName() {
+  public String getProductName() {
     return productName;
   }
 
-  public final void setProductName(String productName) {
+  public void setProductName(String productName) {
     this.productName = productName;
   }
 
-  public final int getColorNo() {
+  public int getColorNo() {
     return colorNo;
   }
 
-  public final void setColorNo(int colorNo) {
+  public void setColorNo(int colorNo) {
     this.colorNo = colorNo;
   }
 
-  public final int getColorName() {
+  public String getColorName() {
     return colorName;
   }
 
-  public final void setColorName(int colorName) {
+  public void setColorName(String colorName) {
     this.colorName = colorName;
   }
 
-  public final int getSizeNo() {
+  public int getSizeNo() {
     return sizeNo;
   }
 
-  public final void setSizeNo(int sizeNo) {
+  public void setSizeNo(int sizeNo) {
     this.sizeNo = sizeNo;
   }
 
-  public final int getSizeName() {
+  public String getSizeName() {
     return sizeName;
   }
 
-  public final void setSizeName(int sizeName) {
+  public void setSizeName(String sizeName) {
     this.sizeName = sizeName;
   }
 
-  public final int getTagPrice() {
+  public int getTagPrice() {
     return tagPrice;
   }
 
-  public final void setTagPrice(int tagPrice) {
+  public void setTagPrice(int tagPrice) {
     this.tagPrice = tagPrice;
   }
 
-  public final int getRetailPrice() {
+  public int getRetailPrice() {
     return retailPrice;
   }
 
-  public final void setRetailPrice(int retailPrice) {
+  public void setRetailPrice(int retailPrice) {
     this.retailPrice = retailPrice;
   }
 
-  public final Date getTs() {
+  public Date getTs() {
     return ts;
   }
 
-  public final void setTs(Date ts) {
+  public void setTs(Date ts) {
     this.ts = ts;
   }
 
-  public static final long getSerialversionuid() {
+  public final static long getSerialversionuid() {
     return serialVersionUID;
   }
 
