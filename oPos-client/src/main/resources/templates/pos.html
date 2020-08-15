@@ -3,8 +3,112 @@
 <head>
 <meta charset="UTF-8">
 <title>Simple POS</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+
 </head>
 <body>
+	<!-- 最外层 Layout -->
+	<div class="container">
 
+		<div class="row">
+			<div class="col-sm">订单编号：</div>
+			<div class="col-sm">
+				<label id="orderNo">OD20200816000001</label>
+			</div>
+			<div class="col-sm">当前导购员：</div>
+			<div class="col-sm">
+				<select class="custom-select" id="inputGroupSelect03"
+					aria-label="Example select with button addon">
+					<option value="1" selected>金牌导购 - 泰罗</option>
+					<option value="2">银牌导购 - 哆啦A梦</option>
+					<option value="3">铜牌导购 - 朽木露琪亚</option>
+				</select>
+			</div>
+			<div class="col-sm">
+				<label id="systemName">开源 POS 系统</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm">SKU：</div>
+			<div class="col-sm">
+				<input id="sku" type="text" class="form-control" />
+			</div>
+			<div class="col-sm">
+				<button type="button" class="btn btn-primary">加入购物车（Enter）</button>
+			</div>
+			<div class="col-sm">
+				<button type="button" class="btn btn-secondary">移除购物车（F1）</button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm">汇总：</div>
+			<div class="col-sm">
+				<label id="totalNum">X</label> 件，<label id="totalAmount">YYYY</label>
+				元。
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm">
+				<button type="button" class="btn btn-danger btn-lg">结账（F2）</button>
+			</div>
+		</div>
+
+		<div class="row">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">货号</th>
+						<th scope="col">商品名称</th>
+						<th scope="col">尺码</th>
+						<th scope="col">颜色</th>
+						<th scope="col">吊牌金额</th>
+						<th scope="col">实际金额</th>
+						<th scope="col">数量</th>
+						<th scope="col">合计</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr id="tr-1">
+						<th scope="row">1</th>
+						<th scope="col" name="productNo"></th>
+						<th scope="col" name="productName"></th>
+						<th scope="col" name="sizeName"></th>
+						<th scope="col" name="colorName"></th>
+						<th scope="col" name="tagPrice"></th>
+						<th scope="col" name="retailPrice"></th>
+						<th scope="col" name="num"></th>
+						<th scope="col" name="total"></th>
+					</tr>
+					<tr id="tr-2">
+						<th scope="row">2</th>
+						<th scope="col" name="productNo"></th>
+						<th scope="col" name="productName"></th>
+						<th scope="col" name="sizeName"></th>
+						<th scope="col" name="colorName"></th>
+						<th scope="col" name="tagPrice"></th>
+						<th scope="col" name="retailPrice"></th>
+						<th scope="col" name="num"></th>
+						<th scope="col" name="total"></th>
+					</tr>
+					<tr id="tr-3">
+						<th scope="row">3</th>
+						<th scope="col" name="productNo"></th>
+						<th scope="col" name="productName"></th>
+						<th scope="col" name="sizeName"></th>
+						<th scope="col" name="colorName"></th>
+						<th scope="col" name="tagPrice"></th>
+						<th scope="col" name="retailPrice"></th>
+						<th scope="col" name="num"></th>
+						<th scope="col" name="total"></th>
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+
+	</div>
 </body>
+<script src="/jquery/jquery.min.js"></script>
+<script src="/bootstrap/js/bootstrap.min.js"></script>
 </html>
