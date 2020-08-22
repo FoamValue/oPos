@@ -3,57 +3,73 @@
 <head>
 <meta charset="UTF-8">
 <title>Simple POS</title>
+<link rel="icon" th:href="@{/images/favicon.ico}" type="image/x-icon" />
+<link rel="bookmark" th:href="@{/images/favicon.ico}"
+	type="image/x-icon" />
 <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+<style type="text/css">
+body {
+	font-family: Source Han Serif;
+	font-size: 12px;
+	line-height: 20px;
+}
 
+.height_40 {
+	height: 40px;
+	line-height: 40px;
+}
+</style>
 </head>
 <body>
 	<!-- 最外层 Layout -->
 	<div class="container">
 
-		<div class="row">
-			<div class="col-sm">订单编号：</div>
-			<div class="col-sm">
-				<label id="orderNo">OD20200816000001</label>
+		<div class="row no-gutters">
+			<div class="col-sm-8">
+				<div class="row align-items-start height_40">
+					<div class="col-2">订单编号：</div>
+					<div class="col-4" th:text="${orderNo}"></div>
+					<div class="col-2">当前导购员：</div>
+					<div class="col-4 input-group-sm">
+						<select id="guide" class="custom-select">
+							<option value="" selected>请选择导购</option>
+							<option th:each="guide:${guides}" th:value="${guide.no}"
+								th:text="${guide.name}"></option>
+						</select>
+					</div>
+				</div>
+
+				<div class="row align-items-center height_40">
+					<div class="col-2">SKU：</div>
+					<div class="col-4 input-group-sm">
+						<input id="sku" class="form-control" type="text" />
+					</div>
+					<div class="col-6">
+						<button type="button" class="btn btn-primary">加入购物车（Enter）</button>
+						<button type="button" class="btn btn-secondary">移除购物车（F1）</button>
+					</div>
+				</div>
+
+				<div class="row align-items-end height_40">
+					<div class="col">
+						汇总： <label id="totalNum">X</label> 件，<label id="totalAmount">YYYY</label>
+						元。
+					</div>
+				</div>
+
 			</div>
-			<div class="col-sm">当前导购员：</div>
-			<div class="col-sm">
-				<select class="custom-select" id="inputGroupSelect03"
-					aria-label="Example select with button addon">
-					<option value="1" selected>金牌导购 - 泰罗</option>
-					<option value="2">银牌导购 - 哆啦A梦</option>
-					<option value="3">铜牌导购 - 朽木露琪亚</option>
-				</select>
-			</div>
-			<div class="col-sm">
-				<label id="systemName">开源 POS 系统</label>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm">SKU：</div>
-			<div class="col-sm">
-				<input id="sku" type="text" class="form-control" />
-			</div>
-			<div class="col-sm">
-				<button type="button" class="btn btn-primary">加入购物车（Enter）</button>
-			</div>
-			<div class="col-sm">
-				<button type="button" class="btn btn-secondary">移除购物车（F1）</button>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm">汇总：</div>
-			<div class="col-sm">
-				<label id="totalNum">X</label> 件，<label id="totalAmount">YYYY</label>
-				元。
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm">
-				<button type="button" class="btn btn-danger btn-lg">结账（F2）</button>
+
+			<div class="col-sm-4">
+				<div class="col-12 align-self-center">
+					<h1 id="systemName" th:text="${systemName}"></h1>
+				</div>
+				<div class="col-12 align-self-center">
+					<button type="button" class="btn btn-danger btn-lg btn-block">结账（F2）</button>
+				</div>
 			</div>
 		</div>
 
-		<div class="row">
+		<div class="row no-gutters">
 			<table class="table table-bordered">
 				<thead>
 					<tr>
