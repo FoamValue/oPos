@@ -1,5 +1,5 @@
 server:
-  port: 18080
+  port: 18081
 
 spring:
   profiles: dev
@@ -22,6 +22,10 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
 
 endpoints:
   health:
